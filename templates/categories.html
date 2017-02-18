@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Sport Store</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<link href="css/style.css" rel="stylesheet">-->
+</head>
+
+<body>
+  <nav>
+    <h1>Catalog App</h1>
+    <a href="#">Login/Logout here</a>
+  </nav>
+  <main>
+    <div class="categories">  
+      <h2>categories</h2>
+      {% for category in categories %}
+        <div class="category"><a href="#">{{category.name}}</a></div>
+      {% endfor %}
+    </div>
+    <div class="items">
+      <h1>{{title_items}}</h1>
+      {% for item in itens %}
+        <div class="item"><a href="#">{{item.name}}</a></div>
+      {% endfor %}
+    </div>
+
+  </main>
+</body>
+
+</html>
