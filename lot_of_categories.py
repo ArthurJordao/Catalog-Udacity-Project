@@ -38,22 +38,21 @@ category5 = Category(name='Snowboarding')
 session.add(category5)
 session.commit()
 
-category6 = Category(name='Snowboarding')
+
+category6 = Category(name='Rock Climbing')
 session.add(category6)
 session.commit()
 
-category7 = Category(name='Rock Climbing')
+category7 = Category(name='Foosball')
 session.add(category7)
 session.commit()
 
-category8 = Category(name='Foosball')
+category8 = Category(name='Skating')
 session.add(category8)
 session.commit()
 
-category9 = Category(name='Skating')
+category9 = Category(name='Hockey')
 session.add(category9)
 session.commit()
 
-category10 = Category(name='Hockey')
-session.add(category10)
-session.commit()
+item1 = Item
