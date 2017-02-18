@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<link href="css/style.css" rel="stylesheet">-->
+</head>
+
+<body>
+  <nav>
+    <h1>Catalog App</h1>
+    <a href="#">Login/Logout here</a>
+  </nav>
+  <main>
+    {% block content %}{% endblock %}
+
+  </main>
+</body>
+
+</html>
