@@ -34,8 +34,8 @@ def new_item():
         session.commit()
         return redirect(url_for('list_latest'))
 
-@app.route("/catalog/<int:category_id>/item/<int:item_id>")
-def item_details(category_id, item_id):
+@app.route("/catalog/item/<int:item_id>")
+def item_details(item_id):
     item = session.query(Item).filter_by(id=item_id).one()
     return render_template('itemdetails.html', item=item)
 
@@ -55,22 +55,23 @@ def delete_item(item_id):
         return render_template('deleteitem.html', item=item)
     if request.method == 'POST':
         session.delete(item)
-        session.commit(item)
+        session.commit()
         return redirect(url_for('list_latest'))
 
 
-@app.route("/edit/item/<int:item_id>")
+@app.route("/edit/item/<int:item_id>", methods=['GET', 'POST'])
 def edit_item(item_id):
     item = session.query(Item).filter_by(id=item_id).one()
     if request.method == 'GET':
-        return render_template('edititem.html', item=item)
+        categories = session.query(Category).order_by(asc(Category.name))
+        return render_template('edititem.html', item=item, categories=categories)
     if request.method == 'POST':
         item.name = request.form['name']
         item.description = request.form['description']
-        item.category_id = request.form['category_id']
+        item.category_id = request.form['category']
         session.add(item)
         session.commit()
-        return redirect(url_for('item_details', item_id=item_id))
+        return redirect(url_for('item_details', item_id=item.id))
 
 
 if __name__ == "__main__":
