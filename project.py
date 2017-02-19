@@ -34,6 +34,19 @@ def new_item():
         session.commit()
         return redirect(url_for('list_latest'))
 
+@app.route("/catalog/<int:category_id>/item/<int:item_id>")
+def item_details(category_id, item_id):
+    item = session.query(Item).filter_by(id=item_id).one()
+    return render_template('itemdetails.html', item=item)
+
+
+@app.route("/catalog/<int:category_id>")
+def items_category(category_id):
+    items = session.query(Item).filter_by(category_id=category_id)
+    category = session.query(Category).filter_by(id=category_id).one()
+    return render_template('categories.html', title_items=category.name,
+                           items=items)
+
 
 if __name__ == "__main__":
     app.debug = True
