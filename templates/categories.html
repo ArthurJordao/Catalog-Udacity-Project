@@ -2,17 +2,19 @@
 {% block title %}Sport Store{% endblock %}
 
 {% block content %}
-  <div class="categories">  
-    <h2>categories</h2>
-    {% for category in categories %}
-      <div class="category"><a href="{{url_for('items_category', category_id=category.id)}}">{{category.name}}</a></div>
-    {% endfor %}
-  </div>
-  <div class="items">
-    <a href="{{url_for('new_item')}}">Add item</a>
-    <h1>{{title_items}}</h1>
-    {% for item in items %}
-      <div class="item"><a href="{{url_for('item_details', item_id=item.id)}}">{{item.name}}</a></div>
-    {% endfor %}
+  <div class="row">
+    <div class="col-md-6">  
+      <h2>categories</h2>
+      {% for category in categories %}
+        <div><a href="{{url_for('items_category', category_id=category.id)}}">{{category.name}}</a></div>
+      {% endfor %}
+    </div>
+    <div class="col-md-6">
+      <h1>{{title_items}}</h1>
+      {% for item in items %}
+        <div><a href="{{url_for('item_details', item_id=item.id)}}">{{item.name}}</a></div>
+      {% endfor %}
+      <a class="btn btn-primary" href="{{url_for('new_item')}}">Add item</a>
+    </div>
   </div>
 {% endblock %}
