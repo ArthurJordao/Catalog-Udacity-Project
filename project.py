@@ -48,6 +48,31 @@ def items_category(category_id):
                            items=items)
 
 
+@app.route("/delete/item/<int:item_id>", methods=['GET', 'POST'])
+def delete_item(item_id):
+    item = session.query(Item).filter_by(id=item_id).one()
+    if request.method == 'GET':
+        return render_template('deleteitem.html', item=item)
+    if request.method == 'POST':
+        session.delete(item)
+        session.commit(item)
+        return redirect(url_for('list_latest'))
+
+
+@app.route("/edit/item/<int:item_id>")
+def edit_item(item_id):
+    item = session.query(Item).filter_by(id=item_id).one()
+    if request.method == 'GET':
+        return render_template('edititem.html', item=item)
+    if request.method == 'POST':
+        item.name = request.form['name']
+        item.description = request.form['description']
+        item.category_id = request.form['category_id']
+        session.add(item)
+        session.commit()
+        return redirect(url_for('item_details', item_id=item_id))
+
+
 if __name__ == "__main__":
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
