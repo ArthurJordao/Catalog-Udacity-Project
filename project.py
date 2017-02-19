@@ -42,10 +42,11 @@ def item_details(item_id):
 
 @app.route("/catalog/<int:category_id>")
 def items_category(category_id):
+    categories = session.query(Category).order_by(asc(Category.name))
     items = session.query(Item).filter_by(category_id=category_id)
     category = session.query(Category).filter_by(id=category_id).one()
     return render_template('categories.html', title_items=category.name,
-                           items=items)
+                           items=items, categories=categories)
 
 
 @app.route("/delete/item/<int:item_id>", methods=['GET', 'POST'])
