@@ -65,7 +65,8 @@ def edit_item(item_id):
     item = session.query(Item).filter_by(id=item_id).one()
     if request.method == 'GET':
         categories = session.query(Category).order_by(asc(Category.name))
-        return render_template('edititem.html', item=item, categories=categories)
+        return render_template('edititem.html', item=item,
+                               categories=categories)
     if request.method == 'POST':
         item.name = request.form['name']
         item.description = request.form['description']
