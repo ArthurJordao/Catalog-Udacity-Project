@@ -215,6 +215,7 @@ def new_item():
                     user_id=login_session['user_id'])
         session.add(item)
         session.commit()
+        flash('Item add successfully')
         return redirect(url_for('list_latest'))
 
 
@@ -248,6 +249,7 @@ def delete_item(item_id):
     if request.method == 'POST':
         session.delete(item)
         session.commit()
+        flash('Item delete successfully')
         return redirect(url_for('list_latest'))
 
 
@@ -269,6 +271,7 @@ def edit_item(item_id):
         item.category_id = request.form['category']
         session.add(item)
         session.commit()
+        flash('Item edited successfully')
         return redirect(url_for('item_details', item_id=item.id))
 
 
