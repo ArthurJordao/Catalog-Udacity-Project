@@ -1,5 +1,5 @@
 from flask import (Flask, render_template, request, redirect, url_for,
-                   make_response, flash)
+                   make_response, flash, jsonify)
 app = Flask(__name__)
 from sqlalchemy import create_engine, asc, desc
 from sqlalchemy.orm import sessionmaker
@@ -26,8 +26,9 @@ session = DBSession()
 
 
 def create_user(login_session):
-    new_user = User(name=login_session['username'], email=login_session[
-                   'email'], picture=login_session['picture'])
+    new_user = User(name=login_session['username'],
+                    email=login_session['email'],
+                    picture=login_session['picture'])
     session.add(new_user)
     session.commit()
     user = session.query(User).filter_by(email=login_session['email']).one()
@@ -174,8 +175,8 @@ def gdisconnect():
             'Current user not connected.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
-    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session[
-        'access_token']
+    url = ('https://accounts.google.com/o/oauth2/revoke?token=%s' %
+           login_session['access_token'])
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
     print 'result is '
@@ -272,6 +273,24 @@ def edit_item(item_id):
         session.commit()
         flash('Item edited successfully')
         return redirect(url_for('item_details', item_id=item.id))
+
+
+@app.route("/categories/JSON")
+def categories_json():
+    categories = session.query(Category).order_by(asc(Category.name))
+    return jsonify(Categories=[category.serialize for category in categories])
+
+
+@app.route("/catalog/<int:category_id>/JSON")
+def items_category_json(category_id):
+    items = session.query(Item).filter_by(category_id=category_id)
+    return jsonify(Items=[item.serialize for item in items])
+
+
+@app.route("/catalog/item/<int:item_id>/JSON")
+def item_details_json(item_id):
+    item = session.query(Item).filter_by(id=item_id).one()
+    return jsonify(Item=item.serialize)
 
 
 if __name__ == "__main__":
