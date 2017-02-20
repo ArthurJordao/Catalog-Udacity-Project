@@ -22,7 +22,12 @@
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Login/Logout here</a></li>
+          {% if user %}
+            <li><a href="{{url_for('gdisconnect')}}">Logout</a></li>
+          {% endif %}
+          {% if not user %}
+            <li><a href="{{url_for('show_login')}}">Login</a></li>
+          {% endif %}
         </ul>
       </div>
     </div>

@@ -54,5 +54,3 @@ session.commit()
 category9 = Category(name='Hockey')
 session.add(category9)
 session.commit()
-
-item1 = Item
